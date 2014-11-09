@@ -15,7 +15,7 @@ public class GPSURI {
 	public long tsid;
 	public long start_timestamp;
 	public byte timescale;
-
+	
 	public GPSURI(long tsid, long starts, byte t_scale)
 	{
 		this.tsid = tsid;
@@ -23,6 +23,22 @@ public class GPSURI {
 		this.timescale = t_scale;
 	}
 	
+	public long getStart_timestamp() {
+		return start_timestamp;
+	}
+
+	public void setStart_timestamp(long start_timestamp) {
+		this.start_timestamp = start_timestamp;
+	}
+
+	public byte getTimescale() {
+		return timescale;
+	}
+
+	public void setTimescale(byte timescale) {
+		this.timescale = timescale;
+	}
+
 	public void setGPSid(long id)
 	{
 		this.tsid = id;

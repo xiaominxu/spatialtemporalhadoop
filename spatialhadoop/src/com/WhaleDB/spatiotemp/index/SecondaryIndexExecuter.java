@@ -10,14 +10,15 @@ import edu.umn.cs.spatialHadoop.core.Rectangle;
  *	organize index in temporal order
  */
 
-public abstract class SpatialIndexOrganizer {
+public abstract class SecondaryIndexExecuter {
+
+	IndexDataWriter idx_writer;
+	IndexDataSearcher idx_reader;
+
+	public abstract boolean initSpatialIndexMetaStorage() throws Exception;
 	
-	public static final byte TimeUnit_Day = (byte) 0x1;
-	public static final byte TimeUnit_Month = (byte) 0x2;
-	public static final byte TimeUnit_Year = (byte) 0x3;
-	
-	public abstract Collection<GPSURI> getURIsBySpatialTemporalRange(long startts,
-			long endts, Rectangle query_mbr) throws Exception;
+	public abstract boolean BuildSpatialIndex(IndexDataURI targeturi, boolean overwrite)
+			throws Exception;
 	
 	public abstract Collection<GPSURI> getURIsBySpatialTemporalRange(long gps_id, long startts,
 			long endts) throws Exception;

@@ -1,7 +1,5 @@
 package com.WhaleDB.spatiotemp.gpsdata;
 
-import org.apache.commons.lang.NotImplementedException;
-
 import com.WhaleDB.spatiotemp.index.GPSURI;
 /**
  * 
@@ -9,7 +7,7 @@ import com.WhaleDB.spatiotemp.index.GPSURI;
  *
  */
 
-public class GPSStream {
+public abstract class GPSStream {
 
 	public static class TemporalPoint
 	{
@@ -24,21 +22,13 @@ public class GPSStream {
 		}
 	}
 	
-	private GPSURI targetURI;
-	
-	public GPSStream(GPSURI uri)
-	{
-		this.targetURI = uri;
-	}
+	protected GPSURI targetURI;
 	
 	public GPSURI getURI()
 	{
 		return this.targetURI;
 	}
 	
-	public TemporalPoint getNextPoint() throws Exception
-	{
-		throw new NotImplementedException("not implemented now");
-	}
+	public abstract TemporalPoint getNextPoint() throws Exception;
 	
 }

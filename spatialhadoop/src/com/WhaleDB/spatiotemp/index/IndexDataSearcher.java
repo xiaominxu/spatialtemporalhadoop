@@ -4,7 +4,7 @@ package com.WhaleDB.spatiotemp.index;
  * @author xuxiaomin
  *
  */
-public abstract class IndexDataReader {
+public abstract class IndexDataSearcher {
 
 	public abstract SpatialIndex getSpatialIndexFromURI(IndexDataURI uri) throws Exception;
 }

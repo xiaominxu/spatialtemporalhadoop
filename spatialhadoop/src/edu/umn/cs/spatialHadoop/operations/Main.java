@@ -29,9 +29,15 @@ import edu.umn.cs.spatialHadoop.nasa.MakeHDFVideo;
 public class Main {
   
   static {
+	System.setProperty("javax.xml.parsers.DocumentBuilderFactory",
+	    		   "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl"
+//			"org.apache.crimson.jaxp.DocumentBuilderFactoryImpl"
+//			"org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"
+			);
     // Load configuration from files
     Configuration.addDefaultResource("spatial-default.xml");
     Configuration.addDefaultResource("spatial-site.xml");
+    
   }
   
   public static void main(String[] args) {

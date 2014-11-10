@@ -102,15 +102,29 @@ public class RandomShapeGenerator<S extends Shape> implements RecordReader<Recta
     this.shape = shape;
   }
 
+  public static void clearShape(Shape value)
+  {
+	  if(value instanceof TemporalLineString)
+	  {
+		  ((TemporalLineString) value).clear();
+	  }
+  }
+  
   @Override
   public boolean next(Rectangle key, S value) throws IOException {
     // Generate a random shape
+	clearShape(value);
+	
     generateShape(value, mbr, type, rectsize, random);
     
     // Serialize it to text first to make it easy count its size
     text.clear();
     value.toText(text);
     
+    /*check for correctness*/
+	clearShape(value);
+	value.fromText(text);
+	
     // Check if desired generated size has been reached
     if (text.getLength() + NEW_LINE.length + generatedSize > totalSize)
       return false;
@@ -162,10 +176,8 @@ public class RandomShapeGenerator<S extends Shape> implements RecordReader<Recta
       ((Rectangle)shape).y2 = Math.min(mbr.y2, ((Rectangle)shape).y1 + random.nextInt(rectSize) + 2);
     } else if (shape instanceof TemporalLineString){ //xuxiaomin added
     	long startts = System.currentTimeMillis();
-    	TemporalLineString obj = (TemporalLineString) shape;
-    	obj.ts_id = 1;
     	try {
-			generateLineString(startts,1000,obj,mbr,type,random);
+			generateLineString(startts,1000,(TemporalLineString) shape,mbr,type,random);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

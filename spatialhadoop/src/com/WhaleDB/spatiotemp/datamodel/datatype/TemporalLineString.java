@@ -6,6 +6,8 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableComparable;
 
@@ -13,6 +15,7 @@ import edu.umn.cs.spatialHadoop.core.Point;
 import edu.umn.cs.spatialHadoop.core.Rectangle;
 import edu.umn.cs.spatialHadoop.core.Shape;
 import edu.umn.cs.spatialHadoop.io.TextSerializerHelper;
+import edu.umn.cs.spatialHadoop.mapred.SpatialRecordReader;
 
 /**
  * 
@@ -21,7 +24,7 @@ import edu.umn.cs.spatialHadoop.io.TextSerializerHelper;
  */
 
 public class TemporalLineString implements Shape, WritableComparable<TemporalLineString>{
-
+	private static final Log LOG = LogFactory.getLog(TemporalLineString.class);
 	/*raw data to be stored*/
 	public long ts_id;
 	public long base_timestamp;
@@ -39,6 +42,16 @@ public class TemporalLineString implements Shape, WritableComparable<TemporalLin
 	public int point_cnt;
 	
 	public int point_capability;
+	
+	public void clear()
+	{
+		point_cnt = 0;
+		base_timestamp = 0;
+		x_min = Double.MAX_VALUE;
+		x_max = Double.MIN_VALUE;
+		y_min = Double.MAX_VALUE;
+		y_max = Double.MIN_VALUE;
+	}
 	
 	public TemporalLineString(long tsid)
 	{
@@ -87,7 +100,7 @@ public class TemporalLineString implements Shape, WritableComparable<TemporalLin
 	
 	
 	public void insertPoint(long ts, Point p) throws Exception{
-		if(point_cnt > Constraints.Max_LineString_Points)
+		if( (point_cnt + 1) > Constraints.Max_LineString_Points)
 		{
 			throw new Exception("reach the high bound of lingstring's point number");
 		}
@@ -97,7 +110,7 @@ public class TemporalLineString implements Shape, WritableComparable<TemporalLin
 			base_timestamp = ts;
 		}
 		
-		if(point_cnt >= point_capability)
+		if((point_cnt + 1) >= point_capability)
 		{
 			point_capability = point_capability * 2 < Constraints.Max_LineString_Points ? point_capability * 2 : Constraints.Max_LineString_Points;
 			double[] new_xvec = new double[point_capability];
@@ -238,6 +251,16 @@ public class TemporalLineString implements Shape, WritableComparable<TemporalLin
 		ts_id = TextSerializerHelper.consumeLong(text, ','); 
 		base_timestamp = TextSerializerHelper.consumeLong(text, ','); 
 		point_cnt = TextSerializerHelper.consumeInt(text, ','); 
+		
+		/*allociate memory for vector via point_cnt*/
+//		if(point_cnt > Constraints.Default_LineString_Points)
+		{
+			timestamp_vector = new int[point_cnt];
+			x_vector = new double[point_cnt];
+			y_vector = new double[point_cnt];
+			point_capability = point_cnt;
+		}
+		
 		x_min = TextSerializerHelper.consumeDouble(text, ',');
 		y_min = TextSerializerHelper.consumeDouble(text, ',');
 		x_max = TextSerializerHelper.consumeDouble(text, ',');

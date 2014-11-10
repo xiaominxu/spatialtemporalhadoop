@@ -66,4 +66,10 @@ public class SpatialResultCollector<T extends Shape> extends ResultSource<T> imp
 		result_set.add((T)r.clone());
 	}
 
+	@Override
+	public void remove() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

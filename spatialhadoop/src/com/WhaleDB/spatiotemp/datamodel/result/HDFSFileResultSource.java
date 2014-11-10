@@ -106,4 +106,10 @@ public class HDFSFileResultSource extends ResultSource
 		return isClosed;
 	}
 
+	@Override
+	public void remove() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

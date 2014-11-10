@@ -1,6 +1,5 @@
 package com.WhaleDB.spatiotemp.index;
 
-import java.util.HashMap;
 
 /**
  * 
@@ -8,7 +7,7 @@ import java.util.HashMap;
  *
  */
 /*Shift+Alt+S 会弹出一个对话框 选择Generate Getters and Setters ...*/
-public abstract class IndexManager {
+public class IndexManager {
 //	public HashMap< IndexDataURI, SpatialIndex > index_cache;
 	PrimaryIndexExecuter primary_index;
 	SecondaryIndexExecuter secondary_index;

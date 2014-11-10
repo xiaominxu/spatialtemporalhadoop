@@ -1,7 +1,11 @@
 package com.WhaleDB.spatiotemp.index;
 
 import org.apache.commons.lang.NotImplementedException;
-
+/**
+ * 
+ * @author xuxiaomin
+ *
+ */
 public class IndexDataURI {
 	public static class URIPathFormatter{
 		public static String container_format_single = "%ld-%ld-%d";

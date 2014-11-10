@@ -97,4 +97,11 @@ public class SpatialResultCollector2<T extends Shape, S extends Entry<T ,Double>
 		result_set.add(new KNNEntry<T,Double>((T)r.clone(),s.doubleValue()));
 	}
 
+
+	@Override
+	public void remove() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -278,7 +278,9 @@ public class TemporalLineString implements Shape, WritableComparable<TemporalLin
 
 	  @Override
 	  public String toString() {
-	    return "Rectangle: ("+x_min+","+y_min+")-("+x_max+","+y_max+")";
+		  Text temp = new Text();
+		  toText(temp);
+		  return temp.toString();
 	  }
 
 	@Override

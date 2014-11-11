@@ -121,10 +121,6 @@ public class RandomShapeGenerator<S extends Shape> implements RecordReader<Recta
     text.clear();
     value.toText(text);
     
-    /*check for correctness*/
-	clearShape(value);
-	value.fromText(text);
-	
     // Check if desired generated size has been reached
     if (text.getLength() + NEW_LINE.length + generatedSize > totalSize)
       return false;
